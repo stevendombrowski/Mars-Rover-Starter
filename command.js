@@ -10,6 +10,5 @@ class Command {
  }
  
 
- let testCommand = new Command('MODE_CHANGE', 'LOW_POWER');
- console.log(testCommand.value)
+ 
  module.exports = Command;
