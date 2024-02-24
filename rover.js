@@ -11,20 +11,20 @@ class Rover {
     receiveMessage(message){
       let commands = message.commands
       let result = {
-         receivedMessage :`${message.name} received!`,
+         message : message.name,
          results : [],
 
       }
       for (let i = 0; i < commands.length; i++){
          if (commands[i].commandType === 'MOVE'){
             if (this.mode === 'LOW_POWER'){
-               result.results.push("completed: false")
+               result.results.push({completed: false})
             }else{
             this.position = commands[i].value,
-            result.results.push("completed: true")}}
+            result.results.push({completed: true})}}
          else if (commands[i].commandType === 'MODE_CHANGE'){
             this.mode = commands[i].value
-            result.results.push("completed: true")
+            result.results.push({completed: true})
          }
          else if (commands[i].commandType === 'STATUS_CHECK'){
             result.results.push( {
@@ -44,16 +44,3 @@ class Rover {
 module.exports = Rover;
 
 
-
-let rover = new Rover(100);
-let commands = [
-   new Command('MOVE', 4321),
-   new Command('STATUS_CHECK'),
-   new Command('MODE_CHANGE', 'LOW_POWER'),
-   new Command('MOVE', 3579),
-   new Command('STATUS_CHECK')
-];
-let message = new Message('TA power', commands);
-let response = rover.receiveMessage(message);
-
-console.log(JSON.stringify(response, null, 2));
